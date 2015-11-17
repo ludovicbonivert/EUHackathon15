@@ -32,3 +32,13 @@
     font-weight: bold;
     margin: 0;
 }
+
+.subheader {
+    text-align: center;
+}
+
+.panel-default>.panel-heading.panel-extra {
+    color: #a94442;
+    background-color: #f2dede;
+    ;
+}
