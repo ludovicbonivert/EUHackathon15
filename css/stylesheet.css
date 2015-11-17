@@ -16,3 +16,19 @@
     margin-top: 15px;
     margin-right: 10px;
 }
+
+.caption {
+    font-style: normal;
+    text-align: left;
+}
+
+.btn-default:hover,
+.btn-default:focus {
+    background-color: lightcoral;
+    border: 1px coral;
+}
+
+.weekly-build {
+    font-weight: bold;
+    margin: 0;
+}
