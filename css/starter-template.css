@@ -7,3 +7,11 @@ body {
     padding: 40px 15px;
     text-align: center;
 }
+
+#header-action {
+    background-image: url("../images/run-child.jpeg");
+}
+
+#secundary-action {
+    font-size: 15px;
+}
