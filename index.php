@@ -1,3 +1,25 @@
+<?php
+session_start();
+include_once 'dbconnect.php';
+
+/*if(!isset($_SESSION['user']))
+{
+ header("Location: index.php");
+}*/
+$res=mysql_query("SELECT * FROM users WHERE user_id=".$_SESSION['user']);
+$userRow=mysql_fetch_array($res);
+
+$completed=mysql_query("SELECT * FROM itemscompleted WHERE user_id=".$_SESSION['user']);
+$completedRow=mysql_fetch_array($completed);
+
+$amountCompleted=mysql_numrows($completed);
+$totalParts=mysql_numrows(mysql_query("SELECT * FROM items"));
+$percentage=round($amountCompleted/$totalParts*100)
+
+$totalPartsW0=mysql_numrows(mysql_query("SELECT * FROM items WHERE week_id=0"));
+$totalPartsW1=mysql_numrows(mysql_query("SELECT * FROM items WHERE week_id=1"));
+$totalPartsW2=mysql_numrows(mysql_query("SELECT * FROM items WHERE week_id=2"));
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +55,7 @@
 </head>
 
 <body>
-
+<?php echo 'Hallo '; echo $_SESSION['user']; echo $amountCompleted; ?>
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="container-fluid">
@@ -47,16 +69,15 @@
                 </button>
                 <div class="header">
                     <img src="images/Character.svg">
-                    <a class="navbar-brand" href="index.html">CS50 Belgium</a>
+                    <a class="navbar-brand" href="index.php">CS50 Belgium</a>
                 </div>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="index.html">Log-in</a>
-                    </li>
+                    <li><a href="#"><?php if(isset($_SESSION['user'])){echo 'Hallo '; echo $userRow['fullname'];} ?></a></li>
+                    <?php if(!isset($_SESSION['user'])){echo '<li><a href="login.php">Log-in</a></li>';}else{echo '<li><a href="logout.php?logout">Sign Out</a></li>';} ?>
 
                 </ul>
             </div>
@@ -72,6 +93,14 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="container">
+            <div class="row">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $amountCompleted; ?>"
+                  aria-valuemin="0" aria-valuemax="<?php echo $totalParts; ?>" style="width:40%">
+                    <?php echo $percentage; ?>% Voltooid
+                  </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-md-4">
